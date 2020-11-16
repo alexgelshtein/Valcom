@@ -1,0 +1,9 @@
+[submodule "marking"]
+	path = marking
+	url = ./marking
+[submodule "robot_vision"]
+	path = robot_vision
+	url = ./robot_vision
+[submodule "ur-interface"]
+	path = ur-interface
+	url = ./ur-interface
