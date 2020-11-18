@@ -1,5 +1,6 @@
 {
-    "python.pythonPath": "C:\\Users\\laser\\AppData\\Local\\Programs\\Python\\Python38\\python.exe",
+    "python.pythonPath": "C:\\Users\\laser\\AppData\\Local\\Programs\\Python\\Python39\\python.exe",
     "python.linting.enabled": true,
-    "python.linting.pylintEnabled": true
+    "python.linting.pylintEnabled": true,
+    "python.formatting.provider": "esbenp.prettier-vscode"
 }
