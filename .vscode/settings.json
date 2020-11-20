@@ -2,5 +2,7 @@
     "python.pythonPath": "C:\\Users\\laser\\AppData\\Local\\Programs\\Python\\Python39\\python.exe",
     "python.linting.enabled": true,
     "python.linting.pylintEnabled": true,
-    "python.formatting.provider": "esbenp.prettier-vscode"
+    "python.linting.pylintPath": "C:\\Users\\laser\\AppData\\Local\\Python\\Python39\\Scripts\\pylint.exe",
+    "python.formatting.provider": "esbenp.prettier-vscode",
+    "python.envFile": "C:\\Users\\laser\\Documents\\VSCode projects\\.env"
 }
