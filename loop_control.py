@@ -1,3 +1,5 @@
+# Outputs the cycle number of the program and execution time.
+
 import socket
 import time
 import sys

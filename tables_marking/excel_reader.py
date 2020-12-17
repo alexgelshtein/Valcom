@@ -1,3 +1,5 @@
+# Reads excel file to retrieve values for tables.
+
 import openpyxl
 
 wb = openpyxl.load_workbook(filename='C:\\Users\\laser\\Documents\\Программы для маркировки\\таблички\\Номера.xlsx')

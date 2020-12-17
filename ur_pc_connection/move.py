@@ -1,3 +1,8 @@
+"""
+This program uses coordinates after get_coordinates.py program
+and executes movel on robot.
+"""
+
 import socket
 import time
 import struct

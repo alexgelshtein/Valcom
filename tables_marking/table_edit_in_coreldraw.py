@@ -1,3 +1,5 @@
+# Automates changing table info in CorelDraw using pyautogui.
+
 import pyautogui
 import time
 import openpyxl

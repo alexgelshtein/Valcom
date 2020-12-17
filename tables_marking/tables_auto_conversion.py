@@ -1,3 +1,5 @@
+# Saves table images to proper format for marking.
+
 import pyautogui
 import time
 

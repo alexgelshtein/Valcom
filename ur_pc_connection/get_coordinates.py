@@ -1,3 +1,8 @@
+"""
+This program gets robot coordinates and writes them
+to txt. file.
+"""
+
 import socket
 import time
 import struct

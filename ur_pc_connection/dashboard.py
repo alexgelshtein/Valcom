@@ -1,3 +1,14 @@
+"""
+A Universal Robot can be controlled from remote by sending simple commands to the GUI over a TCP/IP socket.
+This interface is called the "DashBoard server". 
+The server is running on port 29999 on the robots IP address. 
+Each command should be terminated by a ‘\n’ also called a newline.
+
+Command examples: load <program.urp>, play (starts the loaded program), 
+stop (stops program execution), running (returns if the program is running), 
+get loaded program (returns the loaded program).
+"""
+
 import socket
 import time
 
@@ -11,8 +22,8 @@ s.connect((host, port))
 def sendCommand(cmd):
   cmd = cmd + '\n'
   s.sendall(cmd.encode())
-  time.sleep(1)
+  time.sleep(0.08)
   rcvd = s.recv(4096)
-  print(rcvd.decode().split('\n')[1]) 
+  print(rcvd.decode().split()[-1]) 
 
-sendCommand('PolyscopeVersion')
+sendCommand('running')

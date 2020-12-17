@@ -1,3 +1,5 @@
+# RTDE connection for getting and executing coordinates on robot using ur-interface library.
+
 import sys, time
 sys.path.append('..\\ur-interface')
 import URBasic
@@ -6,6 +8,7 @@ host = '169.254.54.9'
 acc = 0.9
 vel = 0.9
 
+# This function reads coordinates and writes them to .txt file.
 def get_coordinates(robot):
   timeout = 10
   start = time.time()
@@ -16,6 +19,7 @@ def get_coordinates(robot):
       time.sleep(0.05)
   robot.end_freedrive_mode()
 
+# Sends servoj command to move robot smoothly between coordinates.
 def move_robot(robot):
   with open('coordinates.txt', 'r') as f:
     coords = f.readlines()
@@ -33,6 +37,8 @@ def main():
 
   func = sys.argv[1]
 
+  # Write --coordinates to get them into .txt file and then
+  # --move to execute servoj.
   if not func:
     print('usage: {--coordinates | --move}')
     sys.exit(1)

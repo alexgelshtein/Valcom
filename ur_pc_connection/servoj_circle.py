@@ -1,3 +1,9 @@
+"""
+This program generates coordinates for the circle move with given radius and 
+quantity of coordinates, writes them to .txt file and then executes
+using servoj command.
+"""
+
 import sys, math, numpy
 sys.path.append('..\\ur-interface')
 import URBasic

@@ -1,4 +1,7 @@
-#!C:\\Users\\laser\\AppData\\Local\\Programs\\Python\\Python38\\python.exe
+"""
+This program connects to the robot via RT connection and retrieves 
+current robot mode and values of digital outputs.
+"""
 
 import socket
 import time
