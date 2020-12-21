@@ -1,5 +1,4 @@
 import tkinter as tk
-import tkinter.messagebox
 import socket
 import time
 
@@ -13,18 +12,16 @@ def get_info():
   s.settimeout(2)
   try:
     s.connect((host, port))
-  except OSError:
+  except socket.error as e:
     error = True
+    err_msg = e
 
   def sendCommand(cmd):
     cmd = cmd + '\n'
-    try:
-      s.sendall(cmd.encode())
-      time.sleep(0.08)
-      rcvd = s.recv(4096)
-      return rcvd.decode().split()
-    except socket.timeout:
-      error = True
+    s.sendall(cmd.encode())
+    time.sleep(0.08)
+    rcvd = s.recv(4096)
+    return rcvd.decode().split()
 
   command = [
     'robotmode', 
@@ -32,11 +29,10 @@ def get_info():
     'get loaded program', 
     'programState'
     ]
-
-  for i in range(4):
-    command.append(sendCommand(command[i]))
   
   if not error:
+    for i in range(4):
+      command.append(sendCommand(command[i]))
     mode.config(text=command[4][-1])
     sn.config(text=command[5])
     if command[6][0] == 'No':
@@ -46,22 +42,64 @@ def get_info():
     state.config(text=command[7][0])
   else:
     sn.config(text='Не удается получить информацию с робота :(')
+    prog.config(text=err_msg)
 
   window.after(500, get_info)
+  center_the_window(window)
+
+# Layout main window in the center of the screen 
+def center_the_window(root):
+
+  root.update_idletasks()
+  sizes = root.geometry().split('+')
+  window_w = int(sizes[0].split('x')[0])
+  window_h = int(sizes[0].split('x')[1])
+  w = root.winfo_screenwidth() // 2
+  h = root.winfo_screenheight() // 2
+  w -= window_w // 2
+  h -= window_h // 2
+  root.geometry(f'+{w}+{h}')
 
 if __name__ == "__main__":
 
   window = tk.Tk()
+  window.title('Robot monitoring')
+  window.resizable(False, False)
+
+  def log_window():
+    log = tk.Toplevel()
+    log.title('Log')
+    log.geometry('200x200')
+    log.resizable(False, False)
+    exit_btn = tk.Button(
+      log, 
+      text='Exit', 
+      command=log.destroy, 
+      relief='groove', 
+      activebackground='lightgray'
+      )
+    exit_btn.pack(side='bottom')
+    center_the_window(log)
+    log.mainloop()
 
   mode = tk.Label(text='')
   sn = tk.Label(text='Loading...')
   prog = tk.Label(text='')
   state = tk.Label(text='')
+  log_btn = tk.Button(
+    window, 
+    text='Log', 
+    command=log_window, 
+    relief='groove', 
+    activebackground='lightgray'
+    )
 
   mode.pack()
   sn.pack()
   prog.pack()
   state.pack()
+  log_btn.pack(side='bottom')
 
   window.after(500, get_info)
+  center_the_window(window)
   window.mainloop()
