@@ -42,7 +42,7 @@ if __name__ == "__main__":
     filename='tmp.log', 
     filemode='w', 
     level=logging.INFO, 
-    format='%(asctime)s - %(levelname)s - "%(message)s"', 
+    format='%(asctime)s - [%(levelname)s] - %(message)s', 
     datefmt='%d-%b-%y %H:%M:%S'
     )
   
@@ -60,15 +60,16 @@ if __name__ == "__main__":
     logging.warn(data[0])
   time.sleep(1)
   prog_finished = False
+  start_over = False
 
   while True:
     new_data = get_info(error)
     if len(new_data) == 1 and new_data != data:
       logging.warn(new_data[0])
-    elif len(new_data) > 1 and len(data) > 1 and (new_data[2] != data[2] or prog_finished):
-      if new_data[2][0] == 'No':
+    elif len(new_data) > 1 and len(data) > 1 and (new_data[2] != data[2] or prog_finished or start_over):
+      if new_data[2][0] == 'No' and not prog_finished:
         logging.info('No program loaded')
-        prog_finished = False
+        prog_finished = True
       else:
         if not prog_finished:
           logging.info(f'{new_data[2][-1]} is loaded')
@@ -79,6 +80,8 @@ if __name__ == "__main__":
           new_data = get_info(error)
           if new_data[2][-1] != prog:
             cancel = True
+            prog_finished = False
+            start_over = True
             break
         if not cancel:
           logging.info(f'{new_data[2][-1]} is playing')
@@ -86,9 +89,11 @@ if __name__ == "__main__":
           while new_data[3][0] == 'PLAYING' or new_data[3][0] == 'PAUSED':
             time.sleep(1)
             new_data = get_info(error)
-          logging.info(f'{new_data[2][-1]} worked for {time.time() - start}')
+          logging.info(f'{new_data[2][-1]} worked for {round(time.time() - start, 2)} s')
           prog_finished = True
         else:
-          break
+          start_over = True
+    else:
+      time.sleep(1)
     
     data = new_data
