@@ -3,7 +3,6 @@ import socket
 import time
 
 def get_info():
-
   host = '169.254.54.9'
   port = 29999
   error = False
@@ -49,7 +48,6 @@ def get_info():
 
 # Layout main window in the center of the screen 
 def center_the_window(root):
-
   root.update_idletasks()
   sizes = root.geometry().split('+')
   window_w = int(sizes[0].split('x')[0])
@@ -61,7 +59,6 @@ def center_the_window(root):
   root.geometry(f'+{w}+{h}')
 
 if __name__ == "__main__":
-
   window = tk.Tk()
   window.title('Robot monitoring')
   window.resizable(False, False)
@@ -69,8 +66,10 @@ if __name__ == "__main__":
   def log_window():
     log = tk.Toplevel()
     log.title('Log')
-    log.geometry('200x200')
+    log.geometry('650x400')
     log.resizable(False, False)
+    header_lbl = tk.Label(log, text='Robot log')
+    text_box = tk.Text(log, height=log.winfo_screenmmheight() - 265, width=log.winfo_screenmmwidth())
     exit_btn = tk.Button(
       log, 
       text='Exit', 
@@ -78,7 +77,19 @@ if __name__ == "__main__":
       relief='groove', 
       activebackground='lightgray'
       )
+
+    # Insert new log data into window
+    def read_data():
+      with open('tmp.log', 'r') as l:
+        data = l.readlines()
+      text_box.delete(1.0, tk.END)
+      text_box.insert(tk.END, ''.join(data))
+      log.after(1000, read_data)
+
+    header_lbl.pack()
+    text_box.pack()
     exit_btn.pack(side='bottom')
+    log.after(1000, read_data)
     center_the_window(log)
     log.mainloop()
 
