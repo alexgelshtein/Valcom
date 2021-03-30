@@ -3,25 +3,25 @@
 import pyautogui
 import time
 
-# (338, 150) - open file
-# (590, 773) - save
-# (771, 772) - ok
+# (265, 310) - open file
+# (592, 774) - save
+# (769, 775) - ok
 
 time.sleep(5)
 
 for i in range(45, 72):
-  pyautogui.moveTo(434, 254)
+  pyautogui.moveTo(265, 310)
   pyautogui.leftClick()
   pyautogui.PAUSE = 0.5
   pyautogui.typewrite(f'{i}.pcx')
   pyautogui.keyDown('Enter')
   pyautogui.PAUSE = 0.5
-  pyautogui.moveTo(590, 773)
+  pyautogui.moveTo(592, 774)
   pyautogui.leftClick()
   pyautogui.PAUSE = 0.25
   pyautogui.typewrite(f'{i}')
   pyautogui.keyDown('Enter')
   pyautogui.PAUSE = 0.25
-  pyautogui.moveTo(771, 772)
+  pyautogui.moveTo(769, 775)
   pyautogui.leftClick()
   pyautogui.PAUSE = 0.25

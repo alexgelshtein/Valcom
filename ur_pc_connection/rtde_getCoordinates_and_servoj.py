@@ -11,13 +11,26 @@ vel = 0.9
 # This function reads coordinates and writes them to .txt file.
 def get_coordinates(robot):
   timeout = 10
+  time.sleep(1)
   start = time.time()
   robot.freedrive_mode()
+  print("Let's go!")
   with open('coordinates.txt', 'w') as f:
     while time.time() < start + timeout:
       f.write('[{}, {}, {}, {}, {}, {}]\n'.format(*robot.get_actual_joint_positions()))
       time.sleep(0.05)
   robot.end_freedrive_mode()
+
+def generate_script():
+  with open('coordinates.txt', 'r') as f:
+    with open('C:\\Users\\laser\\Desktop\\servoj.script', 'w') as scrpt:
+      coords = f.readlines()
+      q=eval(coords[0])
+      scrpt.write(f'movej({q})\nstopj(0.5)\n')
+      for each in coords[1:]:
+        pose = eval(each)
+        scrpt.write(f'servoj(q={pose}, t=0.08, lookahead_time=0.1, gain=300)\n')
+      scrpt.write('stopj(0.5)')
 
 # Sends servoj command to move robot smoothly between coordinates.
 def move_robot(robot):
@@ -40,13 +53,15 @@ def main():
   # Write --coordinates to get them into .txt file and then
   # --move to execute servoj.
   if not func:
-    print('usage: {--coordinates | --move}')
+    print('usage: {--coordinates | --move | --script}')
     sys.exit(1)
 
   if func == '--coordinates':
     get_coordinates(robot)
   elif func == '--move':
     move_robot(robot)
+  elif func == '--script':
+    generate_script()
   else:
     print('Error')
     sys.exit(1)
