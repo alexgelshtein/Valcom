@@ -54,29 +54,46 @@ def main():
 
     soup = tk.Label(menu_window, text='Супы').grid(column=0, row=0)
     selectedSoup = tk.StringVar(menu_window)
-    for i in range(3):
-      tk.Radiobutton(menu_window, text=menu[1][i], variable=selectedSoup, value=menu[1][i]).grid(column=0, row=i+1, sticky='W')
-
+    box1 = tk.Listbox(menu_window, selectmode=tk.MULTIPLE, height=3, width=80, exportselection=0)
+    for v in menu[1]:
+      box1.insert(tk.END, v)
+    box1.grid(column=0, row=1)
+    
     salad = tk.Label(menu_window, text='Салаты').grid(column=0, row=4)
     selectedSalad = tk.StringVar(menu_window)
-    for i in range(4):
-      tk.Radiobutton(menu_window, text=menu[0][i], variable=selectedSalad, value=menu[0][i]).grid(column=0, row=i+5, sticky='W')
-
+    box2 = tk.Listbox(menu_window, selectmode=tk.MULTIPLE, height=4, width=80, exportselection=0)
+    for v in menu[0]:
+      box2.insert(tk.END, v)
+    box2.grid(column=0, row=5)
+    
     main_dish = tk.Label(menu_window, text='Горячее').grid(column=0, row=9)
     selectedMain = tk.StringVar(menu_window)
-    for i in range(7):
-      tk.Radiobutton(menu_window, text=menu[2][i], variable=selectedMain, value=menu[2][i]).grid(column=0, row=i+10, sticky='W')
-
+    box3 = tk.Listbox(menu_window, selectmode=tk.MULTIPLE, height=7, width=80, exportselection=0)
+    for v in menu[2]:
+      box3.insert(tk.END, v)
+    box3.grid(column=0, row=10)
+    
     side = tk.Label(menu_window, text='Гарнир').grid(column=0, row=17)
     selectedSide = tk.StringVar(menu_window)
-    for i in range(5):
-      tk.Radiobutton(menu_window, text=menu[3][i], variable=selectedSide, value=menu[3][i]).grid(column=0, row=i+18, sticky='W')
+    box4 = tk.Listbox(menu_window, selectmode=tk.MULTIPLE, height=5, width=80, exportselection=0)
+    for v in menu[3]:
+      box4.insert(tk.END, v)
+    box4.grid(column=0, row=18)
     
     def ok():
-      print(selectedSoup.get())
-      print(selectedSalad.get())
-      print(selectedMain.get())
-      print(selectedSide.get())
+      order = []
+      for i in box1.curselection():
+        order.append(box1.get(i))
+      for i in box2.curselection():
+        order.append(box2.get(i))
+      for i in box3.curselection():
+        order.append(box3.get(i))
+      for i in box4.curselection():
+        order.append(box4.get(i))
+      if len(order) > 0 and len(order) < 5:
+        print(order)
+      else:
+        print('Пожалуйста, выберите блюда снова')
       menu_window.quit()
     b = tk.Button(menu_window, text='Готово', command=ok)
     b.grid(column=0, row=23)
